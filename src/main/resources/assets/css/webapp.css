@@ -1,0 +1,13 @@
+.greet_div {
+    color: white;
+    background-color: rebeccapurple;
+}
+
+.error_msg {
+    color: white;
+    background-color: red;
+}
+
+#notifications {
+    display: none;
+}

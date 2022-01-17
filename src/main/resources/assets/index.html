@@ -3,7 +3,24 @@
     <head>
         <meta charset="UTF-8">
         <title>WebApp</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" href="provided/css/bootstrap.css">
+        <script type="application/javascript" src="provided/js/bootstrap.js"></script>
+        <script type="application/javascript" src="provided/js/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="css/webapp.css">
+        <script type="application/javascript" src="js/webapp.js"></script>
     </head>
     <body>
+        <div id="notifications">
+
+        </div>
+        <form id="greet_form" action="#" class="form">
+            <input type="text" id="name" class="form-control" />
+            <input id="form_submit" type="submit" class="btn btn-primary" value="Greet Me" />
+        </form>
+        <div class="greet_div">
+            <span id="result"></span>
+        </div>
     </body>
 </html>
