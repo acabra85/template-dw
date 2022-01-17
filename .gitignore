@@ -1,4 +1,6 @@
 *.orig
+*iml
+.idea/
 target/
 *.class
 out/
