@@ -1,0 +1,5 @@
+*.orig
+target/
+*.class
+out/
+dependency-reduced-pom.xml
