@@ -6,12 +6,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 class JobManagerTest {
 
-    private Cleaner cleanerStub = new WebAppManager();
-    private JobCleanPolicyPOJO policyStub = new JobCleanPolicyPOJO(ChronoUnit.SECONDS, 30);
+    private final Cleaner cleanerStub = new WebAppManager("template, %s", "Stranger");
+    private final JobCleanPolicyPOJO policyStub = new JobCleanPolicyPOJO(TimeUnit.SECONDS, 30);
     private JobManager underTest;
 
     @BeforeEach

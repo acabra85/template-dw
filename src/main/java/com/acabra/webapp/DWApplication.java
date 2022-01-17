@@ -1,5 +1,6 @@
 package com.acabra.webapp;
 
+import com.acabra.webapp.control.Cleaner;
 import com.acabra.webapp.control.WebAppManager;
 import com.acabra.webapp.health.DWHealthCheck;
 import com.acabra.webapp.job.JobCleanPolicyPOJO;
@@ -13,10 +14,12 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
-import java.time.temporal.ChronoUnit;
 import java.util.EnumSet;
+import java.util.concurrent.TimeUnit;
 
 public class DWApplication extends Application<DWApplicationConfig> {
+
+    private static final String APPLICATION_NAME = "webapp";
 
     /**
      * Provides configuration for Cross Origin Requests
@@ -51,7 +54,7 @@ public class DWApplication extends Application<DWApplicationConfig> {
 
     @Override
     public String getName() {
-        return DWApplicationConfig.applicationName;
+        return APPLICATION_NAME;
     }
 
     @Override
@@ -62,22 +65,24 @@ public class DWApplication extends Application<DWApplicationConfig> {
     @Override
     public void run(DWApplicationConfig configuration, Environment environment) {
         configureCORS(environment);
-        registerResourceControllers(configuration, environment);
+        WebAppManager manager = new WebAppManager(configuration.getGreetTemplate(), configuration.getDefaultName());
+        registerResourceControllers(configuration, environment, manager);
         registerHealthChecks(configuration, environment);
-        startJobManager();
+        startJobManager(manager);
     }
 
-    private void registerResourceControllers(DWApplicationConfig config, Environment environment) {
-        environment.jersey().setUrlPattern(config.getContextPath());
-        environment.jersey().register(new WebAppResource());
+    private void registerResourceControllers(DWApplicationConfig config, Environment environment, WebAppManager manager) {
+        environment.jersey().setUrlPattern(config.getAppContextPath());
+        environment.jersey().register(new WebAppResource(manager));
     }
 
     private void registerHealthChecks(DWApplicationConfig configuration, Environment environment) {
-        environment.healthChecks().register("template", new DWHealthCheck(configuration.getTemplate()));
+        //this is a sample health check to validate the template
+        environment.healthChecks().register("greetTemplate", new DWHealthCheck(configuration.getGreetTemplate()));
     }
 
-    private void startJobManager() {
-        new JobManager(new WebAppManager(), new JobCleanPolicyPOJO(ChronoUnit.MINUTES, 15L))
+    private void startJobManager(Cleaner manager) {
+        new JobManager(manager, new JobCleanPolicyPOJO(TimeUnit.MINUTES, 15L))
                 .start();
     }
 }

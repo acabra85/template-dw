@@ -3,11 +3,11 @@ package com.acabra.webapp.job;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
 @Getter
 public class JobCleanPolicyPOJO {
-    private final ChronoUnit unit;
+    private final TimeUnit unit;
     private final long duration;
 }

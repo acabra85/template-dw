@@ -1,1 +1,1 @@
-web:    java -jar target\webapp-1.0-SNAPSHOT.jar server config\webapp.yml
+web: java -jar target\webapp-1.0-SNAPSHOT.jar server config\webapp.yml

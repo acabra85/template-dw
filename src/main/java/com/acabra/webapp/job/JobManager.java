@@ -46,8 +46,8 @@ public class JobManager {
                 scheduler.start();
                 logger.info("web calculation history scheduler started");
 
-                scheduler.getContext().put("task", this.task);
-                scheduler.getContext().put("policy", this.policy);
+                scheduler.getContext().put(CleanerJob.CLEANER_CTX_KEY, this.task);
+                scheduler.getContext().put(CleanerJob.POLICY_CTX_KEY, this.policy);
 
                 scheduleWebCalculatorHistoryCleanerJob();
                 this.started = !(scheduler.isShutdown() && scheduler.isInStandbyMode());

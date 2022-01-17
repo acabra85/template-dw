@@ -1,45 +1,24 @@
 package com.acabra.webapp;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
+import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
 
+@Getter
 public class DWApplicationConfig extends Configuration {
-    @NotEmpty
-    private String template;
+    @NotEmpty final private String greetTemplate;
+    @NotEmpty final private String defaultName;
+    @NotEmpty final private String appContextPath;
 
-    @NotEmpty
-    protected final static String defaultName = "webappdefaultname";
-
-    @NotEmpty
-    protected final static String applicationName = "webapp";
-
-    @NotEmpty
-    private String contextPath;
-
-    @JsonProperty
-    public String getTemplate() {
-        return template;
-    }
-
-    @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    @JsonProperty
-    public String getApplicationName() {
-        return applicationName;
-    }
-
-    @JsonProperty
-    public String getContextPath() {
-        return contextPath;
+    @JsonCreator
+    public DWApplicationConfig(@JsonProperty("greetTemplate") String greetTemplate,
+                               @JsonProperty("defaultName") String defaultName,
+                               @JsonProperty("appContextPath") String appContextPath) {
+        this.greetTemplate = greetTemplate;
+        this.defaultName = defaultName;
+        this.appContextPath = appContextPath;
     }
 }

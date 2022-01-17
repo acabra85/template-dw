@@ -1,9 +1,8 @@
-template: Hello, %s!
+greetTemplate: Hello, %s!
 defaultName: Stranger
-applicationName: webapp
+appContextPath: /api/*
 server:
   type: simple
-  rootPath: /api/*
   applicationContextPath: /
   adminContextPath: /admin
   connector:
